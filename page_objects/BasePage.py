@@ -80,13 +80,13 @@ class BasePage:
 
     @allure.step("Approving the allert message")
     def alert_accept(self):
-        self.logger.info("Accepting alert: {}".format(self.browser.switch_to.alert()))
-        self.browser.switch_to.alert().accept()
+        self.logger.info("Accepting alert: {}".format(self.browser.switch_to.alert))
+        self.browser.switch_to.alert.accept()
 
     @allure.step("Denying the allert message")
     def alert_dismiss(self):
-        self.logger.info("Denying alert: {}".format(self.browser.switch_to.alert()))
-        self.browser.switch_to.alert().dismiss()
+        self.logger.info("Denying alert: {}".format(self.browser.switch_to.alert))
+        self.browser.switch_to.alert.dismiss()
 
     @allure.step("Entering data to the input")
     def enter_data(self, locator: tuple, value: str):

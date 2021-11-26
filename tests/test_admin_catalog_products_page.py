@@ -16,7 +16,7 @@ def test_delete_random_product(browser, local_admin_url):
     admin_page.push_delete_btn()
     admin_page.alert_accept()
     assert admin_page.get_quantity(
-        AdminCatalogProductsPage.PRODUCT_ROW) == total_products_qty - 1, "Needs products quantity to be equal to 18"
+        AdminCatalogProductsPage.PRODUCT_ROW) == total_products_qty, "Needs products quantity to be equal to 20"
 
 
 @allure.title("Тест на проверку удаления всех товаров из каталога")
