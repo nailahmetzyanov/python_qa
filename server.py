@@ -23,28 +23,25 @@ def parse_headers(get_data: str):
 
 def parse_status(get_data: str):
     lines = get_data.split('\n')
-    i = 0
-    new_status = ''
-    for line in lines:
-        if 'Referer' in line:
-            status = line.split('=')
-            new_status = ''.join([x for x in status[-1] if x.isdigit()])
-        i += 1
-    print('new:', new_status)
-    if new_status == '500':
-        return '500 INTERNAL_SERVER_ERROR'
-    elif new_status == '400':
-        return '400 BAD_REQUEST'
-    elif new_status == '404':
-        return '404 NOT FOUND'
-    elif new_status == '300':
-        return '300 MULTIPLE_CHOICES'
-    elif new_status == '200':
+    status = lines[0].split(" ")[1]
+    search_status = re.search(r"(\/\?status=)(\d{1,3})$", status)
+    if search_status is None:
         return '200 OK'
-    elif new_status == '100':
+    status = int(search_status.group(2))
+    if status == 500:
+        return '500 INTERNAL_SERVER_ERROR'
+    elif status == 400:
+        return '400 BAD_REQUEST'
+    elif status == 404:
+        return '404 NOT FOUND'
+    elif status == 300:
+        return '300 MULTIPLE_CHOICES'
+    elif status == 200:
+        return '200 OK'
+    elif status == 100:
         return '100 CONTINUE'
     else:
-        return 'ENTER VALID STATUS...'
+        return '200 OK'
 
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
@@ -71,5 +68,4 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
                        f'</body></html>\n'
                 conn.send(data.encode("ascii"))
                 conn.shutdown(socket.SHUT_RDWR)
-                conn.close()
                 break
