@@ -21,7 +21,7 @@ def pytest_addoption(parser):
     parser.addoption("--maximized", action="store_true", help="Maximize browser windows")
     parser.addoption("--headless", action="store_true", help="Run tests headless")
     parser.addoption("--executor", action="store", default="127.0.0.1:8081",
-                     choices=["127.0.0.1:8081", "0.0.0.0:4444"])
+                     choices=["127.0.0.1:8081", "127.0.0.1:4444"])
     parser.addoption("--bversion", action="store", default="92.0", choices=["92.0", "91.0", "90.0"])
     parser.addoption("--vnc", action="store_true", default=False)
     parser.addoption("--logs", action="store_true", default=False)
@@ -99,7 +99,7 @@ def browser(request):
     if _browser == "chrome":
         if executor == "127.0.0.1:8081":
             driver = webdriver.Chrome(ChromeDriverManager().install())
-        elif executor == "0.0.0.0:4444":
+        elif executor == "127.0.0.1:4444":
             capabilities = {
                 "browserName": _browser,
                 "browserVersion": version,
@@ -116,7 +116,7 @@ def browser(request):
     elif _browser == "opera":
         if executor == "127.0.0.1:8081":
             driver = driver = webdriver.Opera(OperaDriverManager().install())
-        elif executor == "0.0.0.0:4444":
+        elif executor == "127.0.0.1:4444":
             capabilities = {
                 "browserName": _browser,
                 "browserVersion": version,
@@ -133,7 +133,7 @@ def browser(request):
     elif _browser == "firefox":
         if executor == "127.0.0.1:8081":
             driver = driver = webdriver.Firefox(GeckoDriverManager().install())
-        elif executor == "0.0.0.0:4444":
+        elif executor == "127.0.0.1:4444":
             capabilities = {
                 "browserName": _browser,
                 "browserVersion": version,
